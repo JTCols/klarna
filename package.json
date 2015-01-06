@@ -1,0 +1,34 @@
+{
+  "name": "KlarnaTest",
+  "version": "0.0.1",
+  "description": "KlarnaTest NPM install",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "grunt-autoprefixer": "~2.0.0",
+    "grunt-bower-task": "~0.4.0",
+    "grunt-cli": "~0.1.13",
+    "grunt-concurrent": "~1.0.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-less": "~0.12.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-jsbeautifier": "~0.2.7",
+    "grunt-karma": "^0.9.0",
+    "jasmine-core": "^2.1.2",
+    "jshint-stylish": "~1.0.0",
+
+    "karma": "^0.12.28",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-coverage": "^0.1.5",
+    "karma-html-reporter": "^0.2.4",
+    "karma-jasmine": "^0.3.2",
+    "karma-phantomjs-launcher": "^0.1.4",
+
+    "load-grunt-tasks": "^1.0.0",
+    "time-grunt": "~1.0.0"
+  },
+  "engines": {
+    "node": ">=0.10.26"
+  }
+}

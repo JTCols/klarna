@@ -1,14 +1,11 @@
 ## Quick start
 
-Choose one of the following options:
+prerequisites
 
-1. Download the latest stable release from
-   [html5boilerplate.com](http://html5boilerplate.com/) or a custom build from
-   [Initializr](http://www.initializr.com).
-2. Clone the git repo — `git clone
-   https://github.com/h5bp/html5-boilerplate.git` - and checkout the tagged
-   release you'd like to use.
-
+1. Node.js
+2. Grunt
+3. grunt-cli
+4. bower
 
 ## Features
 
