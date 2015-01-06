@@ -1,0 +1,4 @@
+### Ignore these directories
+/node_modules/
+/src/bower_components/
+/src/css/
