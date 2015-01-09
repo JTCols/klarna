@@ -39,10 +39,18 @@ $( document ).ready(function() {
              */
             addBox: function(e) {
                 var currLastElement = $(".kl-box:last-child"),
-                    dataObj = {
-                        boxId : this.getNextId()
-                    },
-                    insertElem = $(boxTemplate(dataObj));
+                    dataObj,
+                    insertElem,
+                    boxId = this.getNextId();
+
+                //create the data object for use by Handelbars template
+                dataObj = {
+                    boxId: boxId,
+                    leftNumber: boxId - 1,
+                    rightNumber: boxId + 1
+                };
+
+                insertElem = $(boxTemplate(dataObj));
 
                 //if this does not exist we are in an empty state and need to
                 //inject our first box in a different place
@@ -60,6 +68,8 @@ $( document ).ready(function() {
                 //add events to new box
                 this.addBoxEvents(insertElem);
 
+                //last but not least add this to the global dataModel for persistence
+                dataModel.push(dataObj);
             },
 
             /**
@@ -92,19 +102,16 @@ $( document ).ready(function() {
             },
 
             /**
-             *
-             * @param
+             * grab the next id
              */
             getNextId: function(){
                 //todo add logic to handle setting boxIndex when the page is reopened.
-
                 return(boxIndex++);
             },
 
 
             /**
              *
-             * @param element
              */
             persist: function(){
 

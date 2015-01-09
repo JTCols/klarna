@@ -17,6 +17,9 @@
       display: inline-block;
       margin-bottom: 10px;
       background-color: white;
+      position: relative;
+      height: 100px;
+
 
       header {
         .delete-container {
@@ -26,11 +29,19 @@
       }
 
       .kl-left-indicator {
-
+        display: inline-block;
+        border: solid 1px blueviolet;
+        height: 20px;
+        position: absolute;
+        left: 0;
       }
 
       .kl-right-indicator {
-
+        display: inline-block;
+        border: solid 1px greenyellow;
+        height: 20px;
+        position: absolute;
+        right: 0;
       }
     }
 
@@ -74,8 +85,19 @@
     .kl-box:last-child {
       border: solid 3px red;
       cursor: pointer;
+      .kl-right-indicator{
+        display: none;
+
+      }
     }
 
+
+    .kl-box:first-child {
+
+      .kl-left-indicator{
+        display: none;
+      }
+    }
   }
 
 }
