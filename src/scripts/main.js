@@ -38,45 +38,74 @@ $( document ).ready(function() {
              * @param e - The event that initiated the add, the new element will be inserted after its target.
              */
             addBox: function(e) {
-                var insertElem,
-                    currLastElement = $(".kl-box:last-child"),
+                var currLastElement = $(".kl-box:last-child"),
                     dataObj = {
-                        id : this.getNextId()
-                    };
+                        boxId : this.getNextId()
+                    },
+                    insertElem = $(boxTemplate(dataObj));
 
-                //let's clean up the old event handler
-                if(currLastElement){
+                //if this does not exist we are in an empty state and need to
+                //inject our first box in a different place
+                if(currLastElement.length > 0){
+                    //let's clean up the old event handler
                     currLastElement.unbind( "click" );
+
+                    //insert the element into the DOM at the proper location
+                    insertElem.insertAfter(currLastElement);
+                }else{
+                    //insert the element into the DOM at the proper location
+                    $(".container-2").html(insertElem);
                 }
 
-                //insert the element into the DOM at the proper location
-                insertElem = $(boxTemplate(dataObj));
-                insertElem.insertAfter(currLastElement);
-
                 //add events to new box
-                this.addBoxEvent(insertElem);
+                this.addBoxEvents(insertElem);
 
             },
 
-            addBoxEvent: function(element){
+            /**
+             *
+             * @param element
+             */
+            addBoxEvents: function(element){
                 var that = this;
 
                 //Add click event to last child box
                 element.click(function(e){
                     that.addBox(e);
                 });
+
+                element.find(".delete-container").click(function(e){
+                    that.removeBox(e);
+                });
             },
 
+            /**
+             *
+             * @param e
+             */
+            removeBox: function(e){
+
+                var boxElem = $(e.currentTarget).closest(".kl-box");
+                boxElem.remove();
+
+                e.stopPropagation();
+            },
+
+            /**
+             *
+             * @param
+             */
             getNextId: function(){
                 //todo add logic to handle setting boxIndex when the page is reopened.
 
                 return(boxIndex++);
             },
 
-            removeBox: function(e){
 
-            },
-
+            /**
+             *
+             * @param element
+             */
             persist: function(){
 
             }
