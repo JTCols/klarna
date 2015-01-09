@@ -14,12 +14,13 @@ $( document ).ready(function() {
      *
      */
     boxManager = (function() {
-        var value = 0;
+
+        var dataModel = [];
 
         return {
 
             /**
-             *
+             * Initialization Function
              */
             init: function() {
                 var that = this;
@@ -28,6 +29,9 @@ $( document ).ready(function() {
                 $(".kl-box:last-child").click(function(e){
                     that.addBox(e);
                 });
+
+                //initialize the page with one box.
+                this.addBox();
             },
 
             /**
@@ -36,10 +40,14 @@ $( document ).ready(function() {
              * The new box will be inserted directly after the given element unless the given element is the 6th in the
              * series, then a new group will be inserted with a new box
              *
-             * @param el - The element that initiated the add, the new elmenet will be inserted after
+             * @param e - The event that initiated the add, the new element will be inserted after its target.
              */
             addBox: function(e) {
                 alert("O - H");
+            },
+
+            removeBox: function(e){
+
             },
 
             persist: function(){
