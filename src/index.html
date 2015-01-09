@@ -77,22 +77,27 @@
                     </span>
                 </span>
 
-            <span class="kl-box">
-                <header>
-                    <span>X</span>
-                </header>
-                <span class="kl-left-indicator">
-                    0
-                </span>
-                <span class="kl-right-indicator">
-                    2
-                </span>
-            </span>
+
         </div>
     </div>
 
 </div>
 
+
+<!--Handlebars template for the box-->
+<script id="box-template" type="text/x-handlebars-template">
+    <span class="kl-box">
+        <header>
+            <span>X</span>
+        </header>
+        <span class="kl-left-indicator">
+            0
+        </span>
+        <span class="kl-right-indicator">
+            2
+        </span>
+    </span>
+</script>
 
 <!--[if lt IE 8]>
 Deal with IE 8 add Respond.js
@@ -100,6 +105,7 @@ Deal with IE 8 add Respond.js
 
 <!--Adding Jquery for convenience-->
 <script src="../src/bower_components/jquery/dist/jquery.js"></script>
+<script src="../src/bower_components/handlebars/handlebars.js"></script>
 
 <!--main application entry point-->
 <script src="../src/scripts/main.js"></script>

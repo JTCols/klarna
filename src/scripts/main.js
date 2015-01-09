@@ -4,7 +4,6 @@
  *
  */
 
-
 //Entry point
 $( document ).ready(function() {
     var boxManager;
@@ -15,7 +14,10 @@ $( document ).ready(function() {
      */
     boxManager = (function() {
 
-        var dataModel = [];
+        var dataModel = [],
+            boxIndex = 0,
+            source   = $("#box-template").html(),
+            boxTemplate = Handlebars.compile(source);
 
         return {
 
@@ -23,13 +25,6 @@ $( document ).ready(function() {
              * Initialization Function
              */
             init: function() {
-                var that = this;
-
-                //Add click event to last child box
-                $(".kl-box:last-child").click(function(e){
-                    that.addBox(e);
-                });
-
                 //initialize the page with one box.
                 this.addBox();
             },
@@ -43,7 +38,39 @@ $( document ).ready(function() {
              * @param e - The event that initiated the add, the new element will be inserted after its target.
              */
             addBox: function(e) {
-                alert("O - H");
+                var insertElem,
+                    currLastElement = $(".kl-box:last-child"),
+                    dataObj = {
+                        id : this.getNextId()
+                    };
+
+                //let's clean up the old event handler
+                if(currLastElement){
+                    currLastElement.unbind( "click" );
+                }
+
+                //insert the element into the DOM at the proper location
+                insertElem = $(boxTemplate(dataObj));
+                insertElem.insertAfter(currLastElement);
+
+                //add events to new box
+                this.addBoxEvent(insertElem);
+
+            },
+
+            addBoxEvent: function(element){
+                var that = this;
+
+                //Add click event to last child box
+                element.click(function(e){
+                    that.addBox(e);
+                });
+            },
+
+            getNextId: function(){
+                //todo add logic to handle setting boxIndex when the page is reopened.
+
+                return(boxIndex++);
             },
 
             removeBox: function(e){
