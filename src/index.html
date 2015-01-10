@@ -12,15 +12,13 @@
 <body>
 
 <div class="container-1">
-
     <div class="container-2"></div>
-
 </div>
 
 
 <!--Handlebars template for the box-->
 <script id="box-template" type="text/x-handlebars-template">
-    <span class="kl-box">
+    <span class="kl-box {{backgroundStyle}}">
         <header>
             {{boxId}}
             <span class="delete-container">X</span>
@@ -32,6 +30,11 @@
            {{rightNumber}}
         </span>
     </span>
+</script>
+
+<!--Handlebars template for the group-container -->
+<script id="group-container-template" type="text/x-handlebars-template">
+    <div class="group-container"></div>
 </script>
 
 <!--[if lt IE 8]>
