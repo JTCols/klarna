@@ -17,7 +17,6 @@ $( document ).ready(function() {
         var dataModel = [],
             boxIndex = 1,
             colorIndex = 1,
-            widthIndex = 1,
             source   = $("#box-template").html(),
             boxTemplate = Handlebars.compile(source),
             containerSource =  $("#group-container-template").html(),
@@ -121,6 +120,11 @@ $( document ).ready(function() {
 
 
             render: function(){
+                var i;
+
+                for(;i< dataModel.length;i++){
+                    this.insertBoxIntoDom(dataModel);
+                }
 
             },
 
