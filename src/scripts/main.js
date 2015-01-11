@@ -1,7 +1,9 @@
 /**
+ *This code is in response to:
+ * FLUID LAYOUT WITH BOXES (version 140805)
  *
- *
- *
+ * author: Jon Arndt
+ * date: 1-10-2015
  */
 
 //Entry point
