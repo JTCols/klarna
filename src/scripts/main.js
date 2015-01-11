@@ -65,19 +65,31 @@ $(document).ready(function () {
                     dataModel.splice(currIndex + 1, 0, dataObj);
                 }
 
+                //darken background.
+                this.darkenBackground();
+
                 this.renderAll();
 
+            },
 
+            darkenBackground: function(){
+               var cont2 = $(".container-2"),
+                   currColor = cont2.css("background-color"),
+                   darkenedColor;
 
-                //place the element into the dom
-                //if (redrawPage) {
-                //
-                //} else {
-                //    //add this to the global dataModel for persistence
-                //
-                //    this.insertBoxIntoDom(dataObj);
-                //}
+                darkenedColor = this.shadeBlend(-0.15, currColor );
 
+                cont2.css("background-color", darkenedColor);
+            },
+
+            lightenBackground: function(){
+                var cont2 = $(".container-2"),
+                    currColor = cont2.css("background-color"),
+                    darkenedColor;
+
+                darkenedColor = this.shadeBlend(0.10, currColor );
+
+                cont2.css("background-color", darkenedColor);
             },
 
 
@@ -188,6 +200,10 @@ $(document).ready(function () {
 
             },
 
+            /**
+             * Clear all existing boxes from viewport
+             *
+             */
 
             clearDisplay: function () {
                 $(".container-2").empty();
@@ -238,8 +254,35 @@ $(document).ready(function () {
                 element.find(".delete-container").click(function (e) {
                     that.removeBox(e);
                 });
+
+
+                element.on( "mouseenter", function(){
+                    $( ".container-1" ).css( "border", "solid 10px black");
+                    $( ".container-2" ).css( "border", "solid 15px black");
+                });
+
+                element.on( "mouseleave", function(){
+                    $( ".container-1" ).css( "border", "solid 10px transparent");
+                    $( ".container-2" ).css( "border", "solid 15px transparent");
+                });
+
             },
 
+
+            shadeBlend : function(p,c0,c1){
+                var n=p<0?p*-1:p,
+                    u=Math.round,
+                    w=parseInt,
+                    f;
+
+                if(c0.length>7){
+                    f=c0.split(","),t=(c1?c1:p<0?"rgb(0,0,0)":"rgb(255,255,255)").split(","),R=w(f[0].slice(4)),G=w(f[1]),B=w(f[2]);
+                    return "rgb("+(u((w(t[0].slice(4))-R)*n)+R)+","+(u((w(t[1])-G)*n)+G)+","+(u((w(t[2])-B)*n)+B)+")"
+                }else{
+                    f=w(c0.slice(1),16),t=w((c1?c1:p<0?"#000000":"#FFFFFF").slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF;
+                    return "#"+(0x1000000+(u(((t>>16)-R1)*n)+R1)*0x10000+(u(((t>>8&0x00FF)-G1)*n)+G1)*0x100+(u(((t&0x0000FF)-B1)*n)+B1)).toString(16).slice(1)
+                }
+            },
             /**
              *
              * @param e
@@ -253,8 +296,8 @@ $(document).ready(function () {
                 dataModel.splice(currIndex, 1);
 
                 this.renderAll();
-                //add events to new last box
-                //this.addBoxEvents($(".group-container:last-child .kl-box:last-child"));
+
+                this.lightenBackground();
 
                 //todo add events to new last box
                 e.stopPropagation();
