@@ -8,6 +8,7 @@
     "velocity": "~1.1.0"
   },
   "devDependencies": {
-    "velocity": "~1.1.0"
+    "velocity": "~1.1.0",
+    "lodash": "~2.4.1"
   }
 }

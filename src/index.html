@@ -7,46 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="css/main.css">
-
 </head>
 <body>
 
-<div class="container-1">
-    <div class="container-2"></div>
-</div>
+    <div class="container-1">
+        <div class="container-2"></div>
+    </div>
 
-
-<!--Handlebars template for the box-->
-<script id="box-template" type="text/x-handlebars-template">
-    <span class="kl-box {{backgroundStyle}}">
-        <header>
-            {{boxId}}
-            <span class="delete-container">X</span>
-        </header>
-        <span class="kl-left-indicator">
-            {{leftNumber}}
+    <!--Handlebars template for the box-->
+    <script id="box-template" type="text/x-handlebars-template">
+        <span class="kl-box {{backgroundStyle}}">
+            <input type="hidden" class="arrayPosition" value="{{arrayPosition}}" />
+            <header>
+                Box ID: {{boxId}}
+                <span class="delete-container">X</span>
+            </header>
+            <span class="kl-left-indicator">
+                {{leftNumber}}
+            </span>
+            <span class="kl-right-indicator">
+               {{rightNumber}}
+            </span>
         </span>
-        <span class="kl-right-indicator">
-           {{rightNumber}}
-        </span>
-    </span>
-</script>
+    </script>
 
-<!--Handlebars template for the group-container -->
-<script id="group-container-template" type="text/x-handlebars-template">
-    <div class="group-container"></div>
-</script>
+    <!--Handlebars template for the group-container -->
+    <script id="group-container-template" type="text/x-handlebars-template">
+        <div class="group-container"></div>
+    </script>
 
-<!--[if lt IE 8]>
-Deal with IE 8 add Respond.js
-<![endif]-->
+    <!--[if lt IE 8]>
+        Deal with IE 8 add Respond.js if needed
+    <![endif]-->
 
-<!--Adding Jquery for convenience-->
-<script src="../src/bower_components/jquery/dist/jquery.js"></script>
-<script src="../src/bower_components/handlebars/handlebars.js"></script>
+    <!--Adding Jquery for convenience-->
+    <script src="../src/bower_components/jquery/dist/jquery.js"></script>
 
-<!--main application entry point-->
-<script src="../src/scripts/main.js"></script>
+    <!--Probably overkill for this-->
+    <script src="../src/bower_components/handlebars/handlebars.js"></script>
+
+    <!--Adding Lodash for convenience-->
+    <script src="../src/bower_components/lodash/dist/lodash.js"></script>
+
+    <!--main application entry point-->
+    <script src="../src/scripts/main.js"></script>
 
 </body>
 </html>
