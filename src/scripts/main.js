@@ -66,6 +66,7 @@ $(document).ready(function () {
              * Reset the page to initial state
              */
             resetPage: function () {
+                $(".container-2").css("background-color", "#eeeeee");
                 boxIndex = 0;
                 colorIndex = 1;
                 sessionDeletes = 0;
