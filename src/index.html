@@ -10,6 +10,18 @@
 </head>
 <body>
 
+    <div>
+        <h2>Usage Statistics</h2>
+        <div>
+            <label>Total Boxes:</label>
+            <span class="totalBoxes">0</span>
+        </div>
+        <div>
+            <label>Total Deletes (This session):</label>
+            <span class="totalDeletes">0</span>
+        </div>
+    </div>
+
     <div class="container-1">
         <div class="container-2"></div>
     </div>
@@ -19,7 +31,7 @@
         <span class="kl-box {{backgroundStyle}}">
             <input type="hidden" class="arrayPosition" value="{{arrayPosition}}" />
             <header>
-                Box ID: {{boxId}}
+                Box ID: <span class="boxId">{{boxId}}</span>
                 <span class="delete-container">X</span>
             </header>
             <span class="kl-left-indicator">

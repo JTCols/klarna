@@ -17,6 +17,7 @@ $(document).ready(function () {
         var dataModel = [],
             boxIndex = 1,
             colorIndex = 1,
+            sessionDeletes = 0,
             source = $("#box-template").html(),
             boxTemplate = Handlebars.compile(source),
             containerSource = $("#group-container-template").html(),
@@ -28,10 +29,30 @@ $(document).ready(function () {
              * Initialization Function
              */
             init: function () {
-                //initialize the page with one box.
-                this.addBox();
-            },
+                var storedBoxes, storedIndex;
 
+                //Check local storage for persisted data
+                if(localStorage["boxes"]){
+                    storedBoxes = JSON.parse(localStorage["boxes"]);
+                }
+
+                //Check local storage for persisted data
+                if(localStorage["boxIndex"]){
+                    storedIndex = JSON.parse(localStorage["boxIndex"]);
+                }
+
+                if(storedIndex){
+                    boxIndex = parseInt(storedIndex) + 1;
+                }
+
+                if(storedBoxes){
+                    dataModel = storedBoxes;
+                    this.renderAll();
+                }else{
+                    //initialize the page with one box.
+                    this.addBox();
+                }
+            },
 
             /**
              * Add new box to the sequence.
@@ -65,12 +86,15 @@ $(document).ready(function () {
                     dataModel.splice(currIndex + 1, 0, dataObj);
                 }
 
+                //updated stored data
+                this.persist();
+
                 //darken background.
                 this.darkenBackground();
 
                 this.renderAll();
-
             },
+
 
             darkenBackground: function(){
                var cont2 = $(".container-2"),
@@ -78,7 +102,6 @@ $(document).ready(function () {
                    darkenedColor;
 
                 darkenedColor = this.shadeBlend(-0.15, currColor );
-
                 cont2.css("background-color", darkenedColor);
             },
 
@@ -88,7 +111,6 @@ $(document).ready(function () {
                     darkenedColor;
 
                 darkenedColor = this.shadeBlend(0.10, currColor );
-
                 cont2.css("background-color", darkenedColor);
             },
 
@@ -196,6 +218,10 @@ $(document).ready(function () {
                     }
 
                     this.insertBoxIntoDom(currentBox);
+
+                    //update stats
+                    $(".totalBoxes").html(dataModel.length);
+
                 }
 
             },
@@ -204,7 +230,6 @@ $(document).ready(function () {
              * Clear all existing boxes from viewport
              *
              */
-
             clearDisplay: function () {
                 $(".container-2").empty();
             },
@@ -240,6 +265,7 @@ $(document).ready(function () {
             },
 
             /**
+             *Add all of the events that a box will need
              *
              * @param element
              */
@@ -255,7 +281,6 @@ $(document).ready(function () {
                     that.removeBox(e);
                 });
 
-
                 element.on( "mouseenter", function(){
                     $( ".container-1" ).css( "border", "solid 10px black");
                     $( ".container-2" ).css( "border", "solid 15px black");
@@ -268,7 +293,17 @@ $(document).ready(function () {
 
             },
 
-
+            /**
+             * function to programatically lighten and darken a hex color
+             * http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
+             *
+             *There are more accurate ways to handle this, but it forks for this demo.
+             *
+             * @param p - percentage to increase/decrease
+             * @param c0 color to change
+             * @param c1 optional color to blend
+             * @returns {string}
+             */
             shadeBlend : function(p,c0,c1){
                 var n=p<0?p*-1:p,
                     u=Math.round,
@@ -290,33 +325,48 @@ $(document).ready(function () {
             removeBox: function (e) {
 
                 var boxElem = $(e.currentTarget).closest(".kl-box"),
-                    currIndex = boxElem.find(".arrayPosition")[0].value;
+                    currIndex = boxElem.find(".arrayPosition")[0].value,
+                    currId = boxElem.find(".boxId")[0].innerText;
 
-                //update the model removing the selected element
-                dataModel.splice(currIndex, 1);
+                if(confirm("Are you sure you want to delete the box with ID: " + currId )) {
+                    //update the model removing the selected element
+                    dataModel.splice(currIndex, 1);
+                    this.renderAll();
+                    this.lightenBackground();
 
-                this.renderAll();
+                    //updated stored data
+                    this.persist();
 
-                this.lightenBackground();
+                    //increment the number of deletes
+                    sessionDeletes++
 
-                //todo add events to new last box
+                    $(".totalDeletes").html(sessionDeletes);
+                }
+
                 e.stopPropagation();
             },
+
 
             /**
              * grab the next id
              */
             getNextId: function () {
-                //todo add logic to handle setting boxIndex when the page is reopened.
-                return (boxIndex++);
+                //increment index
+                boxIndex++;
+
+                //store index so we can pick up where we left off
+                localStorage["boxIndex"] = JSON.stringify(boxIndex);
+
+                return boxIndex;
             },
 
-
             /**
+             *Save the dataModel to localStorage for persistence. Not a real long term solution but
+             * is handy for this example
              *
              */
             persist: function () {
-
+                localStorage["boxes"] = JSON.stringify(dataModel);
             }
         }
     })();
