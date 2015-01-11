@@ -29,7 +29,7 @@ $(document).ready(function () {
              * Initialization Function
              */
             init: function () {
-                var storedBoxes, storedIndex;
+                var storedBoxes, storedIndex, that = this;
 
                 //Check local storage for persisted data
                 if(localStorage["boxes"]){
@@ -41,17 +41,35 @@ $(document).ready(function () {
                     storedIndex = JSON.parse(localStorage["boxIndex"]);
                 }
 
-                if(storedIndex){
+                if(storedIndex && storedBoxes.length > 0 ){
                     boxIndex = parseInt(storedIndex) + 1;
                 }
 
-                if(storedBoxes){
+                if(storedBoxes.length > 0){
                     dataModel = storedBoxes;
                     this.renderAll();
                 }else{
                     //initialize the page with one box.
                     this.addBox();
                 }
+
+                $("#reset-button").click(function(){
+                    dataModel = [];
+                    that.resetPage();
+                });
+            },
+
+
+            /**
+             * Reset the page to i nitial state
+             */
+            resetPage: function(){
+                boxIndex = 0;
+                colorIndex = 1;
+                sessionDeletes = 0;
+                this.persist();
+                this.clearDisplay();
+                this.init();
             },
 
             /**
