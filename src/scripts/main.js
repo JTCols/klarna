@@ -77,10 +77,8 @@ $(document).ready(function () {
              *
              *
              * @param e - The event that initiated the add, the new element will be inserted after its target.
-             * @param redrawPage - boolean telling us if we can just insert this new box at the end or if we really
-             *        need to redraw the page
              */
-            addBox: function (e, redrawPage) {
+            addBox: function (e) {
                 var dataObj,
                     currIndex,
                     boxId = this.getNextId();
@@ -119,7 +117,7 @@ $(document).ready(function () {
                    currColor = cont2.css("background-color"),
                    darkenedColor;
 
-                darkenedColor = this.shadeBlend(-0.15, currColor );
+                darkenedColor = this.shadeBlend(-0.15, currColor, null );
                 cont2.css("background-color", darkenedColor);
             },
 
@@ -128,7 +126,7 @@ $(document).ready(function () {
                     currColor = cont2.css("background-color"),
                     darkenedColor;
 
-                darkenedColor = this.shadeBlend(0.10, currColor );
+                darkenedColor = this.shadeBlend(0.10, currColor, null);
                 cont2.css("background-color", darkenedColor);
             },
 
@@ -183,7 +181,7 @@ $(document).ready(function () {
                         //we then need to add a new event handler
                         //Add click event to 2nd to last child box
                         currLastElement.click(function (e) {
-                            that.addBox(e, true);
+                            that.addBox(e);
                         });
 
                         //insert the element into the DOM at the proper location
@@ -213,7 +211,7 @@ $(document).ready(function () {
                 this.clearDisplay();
 
                 //reset the color Index for redisplay
-                colorIndex = 1
+                colorIndex = 1;
 
                 //loop through dataModel and rebuild display. We will need reset some of the data
                 for (; i < modelLength; i++) {
@@ -312,7 +310,10 @@ $(document).ready(function () {
             },
 
             /**
-             * function to programatically lighten and darken a hex color
+             * function to programatically lighten and darken a hex color.
+             *
+             * Will not pass lint. Douglass Crockford is weeping.
+             *
              * http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
              *
              *There are more accurate ways to handle this, but it forks for this demo.
@@ -326,7 +327,7 @@ $(document).ready(function () {
                 var n=p<0?p*-1:p,
                     u=Math.round,
                     w=parseInt,
-                    f;
+                    f, t;
 
                 if(c0.length>7){
                     f=c0.split(","),t=(c1?c1:p<0?"rgb(0,0,0)":"rgb(255,255,255)").split(","),R=w(f[0].slice(4)),G=w(f[1]),B=w(f[2]);
@@ -356,7 +357,7 @@ $(document).ready(function () {
                     this.persist();
 
                     //increment the number of deletes
-                    sessionDeletes++
+                    sessionDeletes++;
 
                     $(".totalDeletes").html(sessionDeletes);
                 }
