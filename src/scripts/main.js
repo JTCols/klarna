@@ -233,13 +233,13 @@ $(document).ready(function () {
                         currentBox.rightNumber = nextBox.boxId;
                     }
 
+                    currentBox.arrayPosition = i;
+
                     this.insertBoxIntoDom(currentBox);
 
                     //update stats
                     $(".totalBoxes").html(dataModel.length);
-
                 }
-
             },
 
             /**
@@ -350,6 +350,7 @@ $(document).ready(function () {
                 if(confirm("Are you sure you want to delete the box with ID: " + currId )) {
                     //update the model removing the selected element
                     dataModel.splice(currIndex, 1);
+
                     this.renderAll();
                     this.lightenBackground();
 
