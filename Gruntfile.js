@@ -44,14 +44,8 @@ module.exports = function (grunt) {
             ]
         },
 
-
-
         // Watches files for changes and runs tasks based on the changed files
-        watch: {
-
-
-
-        },
+        watch: {},
 
         //To remove Ruby dependency we are switching over to LESS for CSS preprocessing
         //Pre-process the Less files into css.
@@ -67,7 +61,6 @@ module.exports = function (grunt) {
             dev: {}
 
         },
-
 
         //Cleans up some common issues with JS source code
         //If you run this before JSHint it will cut down on fails
@@ -97,6 +90,10 @@ module.exports = function (grunt) {
 
         }
 
+    });
+
+    grunt.registerTask('build', 'Default build task.', function() {
+        grunt.task.run('less:local');
     });
 
     // Default task(s).
