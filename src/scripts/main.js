@@ -34,28 +34,28 @@ $(document).ready(function () {
                 var storedBoxes, storedIndex, that = this;
 
                 //Check local storage for persisted data
-                if(localStorage["boxes"]){
+                if (localStorage["boxes"]) {
                     storedBoxes = JSON.parse(localStorage["boxes"]);
                 }
 
                 //Check local storage for persisted data
-                if(localStorage["boxIndex"]){
+                if (localStorage["boxIndex"]) {
                     storedIndex = JSON.parse(localStorage["boxIndex"]);
                 }
 
-                if(storedIndex && storedBoxes.length > 0 ){
+                if (storedIndex && storedBoxes.length > 0) {
                     boxIndex = parseInt(storedIndex) + 1;
                 }
 
-                if(storedBoxes.length > 0){
+                if (storedBoxes.length > 0) {
                     dataModel = storedBoxes;
                     this.renderAll();
-                }else{
+                } else {
                     //initialize the page with one box.
                     this.addBox();
                 }
 
-                $("#reset-button").click(function(){
+                $("#reset-button").click(function () {
                     dataModel = [];
                     that.resetPage();
                 });
@@ -63,9 +63,9 @@ $(document).ready(function () {
 
 
             /**
-             * Reset the page to i nitial state
+             * Reset the page to initial state
              */
-            resetPage: function(){
+            resetPage: function () {
                 boxIndex = 0;
                 colorIndex = 1;
                 sessionDeletes = 0;
@@ -97,7 +97,7 @@ $(document).ready(function () {
                 //add styles
                 dataObj = this.applyStyles(dataObj);
 
-                if(!e){
+                if (!e) {
                     dataModel.push(dataObj);
                 } else {
                     currIndex = $(e.currentTarget).find(".arrayPosition")[0].value;
@@ -114,16 +114,16 @@ $(document).ready(function () {
             },
 
 
-            darkenBackground: function(){
-               var cont2 = $(".container-2"),
-                   currColor = cont2.css("background-color"),
-                   darkenedColor;
+            darkenBackground: function () {
+                var cont2 = $(".container-2"),
+                    currColor = cont2.css("background-color"),
+                    darkenedColor;
 
-                darkenedColor = this.shadeBlend(-0.15, currColor, null );
+                darkenedColor = this.shadeBlend(-0.15, currColor, null);
                 cont2.css("background-color", darkenedColor);
             },
 
-            lightenBackground: function(){
+            lightenBackground: function () {
                 var cont2 = $(".container-2"),
                     currColor = cont2.css("background-color"),
                     darkenedColor;
@@ -138,8 +138,6 @@ $(document).ready(function () {
              * We can be a bit smart and just insert a box where it needs to go if the last element was clicked.
              *
              * There is a good bit of logic needed  because of the need to add another group container every 6 boxes
-             *
-             * todo: this can be cleaned up a bit
              *
              * @param dataObj
              */
@@ -227,11 +225,11 @@ $(document).ready(function () {
                     }
                     that.applyStyles(currentBox);
 
-                    if(previousBox && previousBox.boxId){
+                    if (previousBox && previousBox.boxId) {
                         currentBox.leftNumber = previousBox.boxId;
                     }
 
-                    if(nextBox && nextBox.boxId ){
+                    if (nextBox && nextBox.boxId) {
                         currentBox.rightNumber = nextBox.boxId;
                     }
 
@@ -299,14 +297,14 @@ $(document).ready(function () {
                     that.removeBox(e);
                 });
 
-                element.on( "mouseenter", function(){
-                    $( ".container-1" ).css( "border", "solid 10px black");
-                    $( ".container-2" ).css( "border", "solid 15px black");
+                element.on("mouseenter", function () {
+                    $(".container-1").css("border", "solid 10px black");
+                    $(".container-2").css("border", "solid 15px black");
                 });
 
-                element.on( "mouseleave", function(){
-                    $( ".container-1" ).css( "border", "solid 10px transparent");
-                    $( ".container-2" ).css( "border", "solid 15px transparent");
+                element.on("mouseleave", function () {
+                    $(".container-1").css("border", "solid 10px transparent");
+                    $(".container-2").css("border", "solid 15px transparent");
                 });
 
             },
@@ -315,7 +313,6 @@ $(document).ready(function () {
              * function to programatically lighten and darken a hex color.
              *
              * Will not pass lint. Douglass Crockford is weeping.
-             *
              * http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
              *
              *There are more accurate ways to handle this, but it forks for this demo.
@@ -325,22 +322,23 @@ $(document).ready(function () {
              * @param c1 optional color to blend
              * @returns {string}
              */
-            shadeBlend : function(p,c0,c1){
-                var n=p<0?p*-1:p,
-                    u=Math.round,
-                    w=parseInt,
+            shadeBlend: function (p, c0, c1) {
+                var n = p < 0 ? p * -1 : p,
+                    u = Math.round,
+                    w = parseInt,
                     f, t;
 
-                if(c0.length>7){
-                    f=c0.split(","),t=(c1?c1:p<0?"rgb(0,0,0)":"rgb(255,255,255)").split(","),R=w(f[0].slice(4)),G=w(f[1]),B=w(f[2]);
-                    return "rgb("+(u((w(t[0].slice(4))-R)*n)+R)+","+(u((w(t[1])-G)*n)+G)+","+(u((w(t[2])-B)*n)+B)+")"
-                }else{
-                    f=w(c0.slice(1),16),t=w((c1?c1:p<0?"#000000":"#FFFFFF").slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF;
-                    return "#"+(0x1000000+(u(((t>>16)-R1)*n)+R1)*0x10000+(u(((t>>8&0x00FF)-G1)*n)+G1)*0x100+(u(((t&0x0000FF)-B1)*n)+B1)).toString(16).slice(1)
+                if (c0.length > 7) {
+                    f = c0.split(","), t = (c1 ? c1 : p < 0 ? "rgb(0,0,0)" : "rgb(255,255,255)").split(","), R = w(f[0].slice(4)), G = w(f[1]), B = w(f[2]);
+                    return "rgb(" + (u((w(t[0].slice(4)) - R) * n) + R) + "," + (u((w(t[1]) - G) * n) + G) + "," + (u((w(t[2]) - B) * n) + B) + ")"
+                } else {
+                    f = w(c0.slice(1), 16), t = w((c1 ? c1 : p < 0 ? "#000000" : "#FFFFFF").slice(1), 16), R1 = f >> 16, G1 = f >> 8 & 0x00FF, B1 = f & 0x0000FF;
+                    return "#" + (0x1000000 + (u(((t >> 16) - R1) * n) + R1) * 0x10000 + (u(((t >> 8 & 0x00FF) - G1) * n) + G1) * 0x100 + (u(((t & 0x0000FF) - B1) * n) + B1)).toString(16).slice(1)
                 }
             },
+
             /**
-             *
+             Remove a box from the dataModel then re-render the page
              * @param e
              */
             removeBox: function (e) {
@@ -349,20 +347,22 @@ $(document).ready(function () {
                     currIndex = boxElem.find(".arrayPosition")[0].value,
                     currId = boxElem.find(".boxId")[0].innerText;
 
-                if(confirm("Are you sure you want to delete the box with ID: " + currId )) {
+                if (confirm("Are you sure you want to delete the box with ID: " + currId)) {
                     //update the model removing the selected element
                     dataModel.splice(currIndex, 1);
-
-                    this.renderAll();
                     this.lightenBackground();
-
-                    //updated stored data
-                    this.persist();
 
                     //increment the number of deletes
                     sessionDeletes++;
 
+                    //updated stored data
+                    this.persist();
+
+                    //update stats
                     $(".totalDeletes").html(sessionDeletes);
+
+                    //re-draw the page
+                    this.renderAll();
                 }
 
                 e.stopPropagation();
