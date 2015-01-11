@@ -49,12 +49,8 @@ $(document).ready(function () {
                 //create the data object for use by Handlebars template
                 dataObj = {
                     boxId: boxId,
-                    leftNumber: function(){
-                        return this.arrayPosition;
-                    },
-                    rightNumber: function(){
-                        return this.arrayPosition + 2;
-                    },
+                    leftNumber: 0,
+                    rightNumber: 0,
                     backgroundStyle: null,
                     arrayPosition: dataModel.length
                 };
@@ -62,18 +58,25 @@ $(document).ready(function () {
                 //add styles
                 dataObj = this.applyStyles(dataObj);
 
-                //place the element into the dom
-                if (redrawPage) {
-                    currIndex = $(e.currentTarget).find(".arrayPosition")[0].value;
-
-
-                    dataModel.splice(currIndex+1, 0, dataObj);
-                    this.renderAll();
-                } else {
-                    //add this to the global dataModel for persistence
+                if(!e){
                     dataModel.push(dataObj);
-                    this.insertBoxIntoDom(dataObj);
+                } else {
+                    currIndex = $(e.currentTarget).find(".arrayPosition")[0].value;
+                    dataModel.splice(currIndex + 1, 0, dataObj);
                 }
+
+                this.renderAll();
+
+
+
+                //place the element into the dom
+                //if (redrawPage) {
+                //
+                //} else {
+                //    //add this to the global dataModel for persistence
+                //
+                //    this.insertBoxIntoDom(dataObj);
+                //}
 
             },
 
@@ -96,7 +99,6 @@ $(document).ready(function () {
 
                 //create the element to insert by applying data to the
                 //pre-compiled handlebars template, then turn it into a JQuery object for your programming pleasure
-
                 insertElem = $(boxTemplate(dataObj));
 
                 //initial state and we need to insert a group-container
@@ -130,7 +132,6 @@ $(document).ready(function () {
                         //Add click event to 2nd to last child box
                         currLastElement.click(function (e) {
                             that.addBox(e, true);
-                            //window.alert("Hey Hey Hey")
                         });
 
                         //insert the element into the DOM at the proper location
@@ -141,7 +142,6 @@ $(document).ready(function () {
                 //add events to new box
                 this.addBoxEvents(insertElem);
 
-
             },
 
             /**
@@ -149,10 +149,12 @@ $(document).ready(function () {
              * optimal in any mobile environment. We only want to call this when we are forced to redraw the entire
              * page.
              */
-
             renderAll: function () {
                 var i = 0,
                     currentBox,
+                    previousBox,
+                    nextBox,
+                    modelLength = dataModel.length,
                     that = this;
 
                 //out with the old
@@ -162,10 +164,24 @@ $(document).ready(function () {
                 colorIndex = 1
 
                 //loop through dataModel and rebuild display. We will need reset some of the data
-                for (; i < dataModel.length; i++) {
+                for (; i < modelLength; i++) {
                     currentBox = dataModel[i];
+
+                    if (i !== 0) {
+                        previousBox = dataModel[i - 1];
+                    }
+                    if (i < modelLength) {
+                        nextBox = dataModel[i + 1];
+                    }
                     that.applyStyles(currentBox);
 
+                    if(previousBox && previousBox.boxId){
+                        currentBox.leftNumber = previousBox.boxId;
+                    }
+
+                    if(nextBox && nextBox.boxId ){
+                        currentBox.rightNumber = nextBox.boxId;
+                    }
 
                     this.insertBoxIntoDom(currentBox);
                 }
@@ -173,8 +189,8 @@ $(document).ready(function () {
             },
 
 
-            clearDisplay: function(){
-                $( ".container-2" ).empty();
+            clearDisplay: function () {
+                $(".container-2").empty();
             },
 
             /**
