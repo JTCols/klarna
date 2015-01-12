@@ -318,7 +318,7 @@ $(document).ready(function () {
             },
 
             /**
-             * function to programatically lighten and darken a hex color.
+             * function to pragmatically lighten and darken a hex color.
              *
              * Will not pass lint. Douglass Crockford is weeping.
              * http://stackoverflow.com/questions/5560248/programmatically-lighten-or-darken-a-hex-color-or-rgb-and-blend-colors
