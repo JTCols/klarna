@@ -56,7 +56,6 @@ $(document).ready(function () {
                 }
 
                 $("#reset-button").click(function () {
-
                     that.resetPage();
                 });
             },
@@ -87,6 +86,7 @@ $(document).ready(function () {
             addBox: function (e) {
                 var dataObj,
                     currIndex,
+                    boxIndex,
                     boxId = this.getNextId();
 
                 //create the data object for use by Handlebars template
@@ -105,7 +105,9 @@ $(document).ready(function () {
                     dataModel.push(dataObj);
                 } else {
                     currIndex = $(e.currentTarget).find(".arrayPosition")[0].value;
-                    dataModel.splice(currIndex + 1, 0, dataObj);
+                    boxIndex = parseInt(currIndex);
+                    dataObj.arrayPosition = (boxIndex + 1);
+                    dataModel.splice(boxIndex + 1, 0, dataObj);
                 }
 
                 //updated stored data
