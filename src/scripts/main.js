@@ -56,7 +56,7 @@ $(document).ready(function () {
                 }
 
                 $("#reset-button").click(function () {
-                    dataModel = [];
+
                     that.resetPage();
                 });
             },
@@ -67,9 +67,12 @@ $(document).ready(function () {
              */
             resetPage: function () {
                 $(".container-2").css("background-color", "#eeeeee");
+                dataModel = [];
                 boxIndex = 0;
                 colorIndex = 1;
                 sessionDeletes = 0;
+                //update stats
+                $(".totalBoxes").html(dataModel.length);
                 this.persist();
                 this.clearDisplay();
                 this.init();
@@ -190,8 +193,11 @@ $(document).ready(function () {
                     }
                 }
 
+
                 //add events to new box
                 this.addBoxEvents(insertElem);
+
+                return insertElem;
 
             },
 
