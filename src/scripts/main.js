@@ -47,7 +47,7 @@ $(document).ready(function () {
                     boxIndex = parseInt(storedIndex) + 1;
                 }
 
-                if (storedBoxes.length > 0) {
+                if (storedBoxes && storedBoxes.length > 0) {
                     dataModel = storedBoxes;
                     this.renderAll();
                 } else {
